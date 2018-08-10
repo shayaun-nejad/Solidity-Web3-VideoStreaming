@@ -16,6 +16,7 @@ contract Bet {
 
     mapping(address => Player) public playerInfo;
 
+   function() public payable {}
 
     function Bet(uint256 _minimumBet) public {
         owner = msg.sender;
@@ -61,7 +62,16 @@ contract Bet {
             }
             delete playerInfo[playerAddress];
         }
-    }
 
+        players.length = 0;
+
+        uint256 winnerEtherAmount = totalBet / winners.length;
+        // NEED TO CALCULATE AND FACTOR IN ODDS!
+
+        for(uint256 j = 0; j < count; j++) {
+            if (winners[j] !== address(0))
+                winners[j].transfer(winnerEtherAmount);
+        }
+    }
 }
 
